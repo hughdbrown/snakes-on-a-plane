@@ -50,3 +50,6 @@ Multiple-host implementation
 - localshop
 - postgresql
 - nginx
+
+Miscellaneous
+7. Change from upstart to supervisord
