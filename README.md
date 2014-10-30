@@ -32,6 +32,7 @@ Todo
 pypi
 ----
 
+Initial single-host implementation
 1. Find python pypi package
 - localshop
 - devpy
@@ -41,6 +42,8 @@ pypi
 2.3 Add EXPOSE, USER, and VOLUME statements
 3. Scripts to build and run docker containers
 - Set ports and volumes
+
+Multiple-host implementation
 4. Upgrade database to use postgresql
 5. Upgrade web server to nginx
 6. Add fig file
