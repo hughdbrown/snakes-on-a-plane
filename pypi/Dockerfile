@@ -2,6 +2,7 @@
 #
 # Reference:
 # http://www.plankandwhittle.com/snakes-in-your-datacenter/
+# http://bitofcheese.blogspot.com/2013/05/local-pypi-options.html
 # https://github.com/botify-labs/docker-localshop
 
 FROM ubuntu:14.04
