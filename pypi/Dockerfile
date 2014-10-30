@@ -35,11 +35,28 @@ ADD *.conf /etc/init/
 
 ADD run/run-localhost.sh /
 
-RUN useradd --user-group --home-dir /home/localshop --system --shell /bin/bash localshop
-# RUN useradd --user-group --no-create-home --system --shell /bin/false localshop
+ENV LOCALSHOP_USER localshop
+ENV LOCALSHOP_GROUP localshop
+ENV LOCALSHOP_HOME /home/localshop
+
+RUN useradd --user-group \
+    --home-dir ${LOCALSHOP_HOME} \
+    --disabled-password \
+    --system \
+    --shell /bin/bash \
+    ${LOCALSHOP_USER}
+
+# Ensure localshop sources directory is writable
+RUN mkdir ${LOCALSHOP_HOME}/source && \
+    chown -R ${LOCALSHOP_GROUP}:${LOCALSHOP_USER} ${LOCALSHOP_HOME}/source && \
+    chmod -R 775 ${LOCALSHOP_HOME}/source
+
+# Ensure localshop db is in read-write mode
+RUN chown ${LOCALSHOP_GROUP}:${LOCALSHOP_USER} ${LOCALSHOP_HOME}/localshop.db && \
+    chmod 775 ${LOCALSHOP_HOME}/.localshop/localshop.db
 
 EXPOSE 8000
-USER localshop
+USER ${LOCALSHOP_USER}
 VOLUME ["/data"]
 
 # Start localshop
