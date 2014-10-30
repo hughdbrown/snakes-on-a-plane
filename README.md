@@ -6,7 +6,7 @@ no or restricted internet connectivity -- like when you are on an airplane. A co
 for a local docker registry exists, but other pieces of infrastructure are necessary
 to run with limited connectivity.
 
-Development on this began during the Docker Hackathon 2014-10-30.
+Development on this began during the [Docker Hackathon 2014-10-30](https://blog.docker.com/2014/10/announcing-docker-global-hack-day-2/).
 
 Scope
 =====
