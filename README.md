@@ -40,8 +40,11 @@ Initial single-host implementation
 - devpy
 
 2. Dockerfile
+
 2.1. Create basic Dockerfile that installs pypi and requirements
+
 2.2. Perform init actions
+
 2.3. Add EXPOSE, USER, and VOLUME statements
 
 3. Scripts to build and run docker containers
