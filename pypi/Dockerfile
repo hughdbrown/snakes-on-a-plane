@@ -25,7 +25,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu utopic main universe" >> /etc/apt
     apt-get clean
 
 # nginx settings
-ADD etc/nginx/sites-available/localshop /nginx/sites-available/.
+ADD etc/nginx/sites-available/localshop /etc/nginx/sites-available/.
 
 RUN rm /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/localshop /etc/nginx/sites-enabled/localshop
