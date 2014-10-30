@@ -44,5 +44,6 @@ pypi
 4. Upgrade database to use postgresql
 5. Upgrade web server to nginx
 6. Add fig file
+- localshop
 - postgresql
 - nginx

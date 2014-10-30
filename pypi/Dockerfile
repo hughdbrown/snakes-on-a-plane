@@ -18,12 +18,19 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu utopic main universe" >> /etc/apt
     apt-get -y update && \
     apt-get install -y build-essential pkg-config && \
     apt-get install -y sqlite3 && \
+    apt-get install nginx && \
     apt-get install -y python python-dev python-distribute python-pip && \
     pip install localshop && \
-    localshop init && \
     apt-get clean
 
-# ADD *.conf /etc/init/.
+# nginx settings
+ADD etc/nginx/sites-available/localshop /nginx/sites-available/.
+
+RUN rm /etc/nginx/sites-enabled/default && \
+    ln -s /etc/nginx/sites-available/localshop /etc/nginx/sites-enabled/localshop
+
+# Upstart config files
+ADD *.conf /etc/init/.
 
 EXPOSE 8000
 USER localshop
