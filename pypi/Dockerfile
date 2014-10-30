@@ -25,10 +25,12 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu utopic main universe" >> /etc/apt
     apt-get clean
 
 # nginx settings
-ADD etc/nginx/sites-available/localshop /etc/nginx/sites-available/.
+RUN mkdir -p /etc/nginx/{sites-available,sites-enabled}
+ADD etc/nginx/sites-available/localshop /etc/nginx/sites-available/
 
 RUN rm /etc/nginx/sites-enabled/default && \
-    ln -s /etc/nginx/sites-available/localshop /etc/nginx/sites-enabled/localshop
+    cd /etc/nginx/sites-enabled && \
+    ln -s /etc/nginx/sites-available/localshop localshop
 
 # Upstart config files
 ADD *.conf /etc/init/
@@ -38,10 +40,11 @@ ADD run/run-localhost.sh /
 ENV LOCALSHOP_USER localshop
 ENV LOCALSHOP_GROUP localshop
 ENV LOCALSHOP_HOME /home/localshop
+ENV LOCALSHOP_DB ${LOCALSHOP_HOME}/localshop.db
 
 RUN useradd --user-group \
     --home-dir ${LOCALSHOP_HOME} \
-    --disabled-password \
+    --create-home \
     --system \
     --shell /bin/bash \
     ${LOCALSHOP_USER}
@@ -51,12 +54,17 @@ RUN mkdir ${LOCALSHOP_HOME}/source && \
     chown -R ${LOCALSHOP_GROUP}:${LOCALSHOP_USER} ${LOCALSHOP_HOME}/source && \
     chmod -R 775 ${LOCALSHOP_HOME}/source
 
+ADD localshop* ${LOCALSHOP_HOME}/
+
 # Ensure localshop db is in read-write mode
-RUN chown ${LOCALSHOP_GROUP}:${LOCALSHOP_USER} ${LOCALSHOP_HOME}/localshop.db && \
-    chmod 775 ${LOCALSHOP_HOME}/.localshop/localshop.db
+RUN chown ${LOCALSHOP_GROUP}:${LOCALSHOP_USER} ${LOCALSHOP_DB} && \
+    chmod 775 ${LOCALSHOP_DB}
+
+USER ${LOCALSHOP_USER}
+RUN localshop syncdb --noinput && \
+    localshop migrate
 
 EXPOSE 8000
-USER ${LOCALSHOP_USER}
 VOLUME ["/data"]
 
 # Start localshop
