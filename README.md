@@ -25,3 +25,24 @@ with a populated cache would make this possible.
 3. local yum repo
 
 The same applies to working with Centos and yum packages.
+
+Todo
+====
+
+pypi
+----
+
+1. Find python pypi package
+- localshop
+- devpy
+2. Dockerfile
+2.1 Create basic Dockerfile that installs pypi and requirements
+2.2 Perform init actions
+2.3 Add EXPOSE, USER, and VOLUME statements
+3. Scripts to build and run docker containers
+- Set ports and volumes
+4. Upgrade database to use postgresql
+5. Upgrade web server to nginx
+6. Add fig file
+- postgresql
+- nginx
