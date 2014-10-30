@@ -31,11 +31,16 @@ RUN rm /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/localshop /etc/nginx/sites-enabled/localshop
 
 # Upstart config files
-ADD *.conf /etc/init/.
+ADD *.conf /etc/init/
+
+ADD run/run-localhost.sh /
+
+RUN useradd --user-group --home-dir /home/localshop --system --shell /bin/bash localshop
+# RUN useradd --user-group --no-create-home --system --shell /bin/false localshop
 
 EXPOSE 8000
 USER localshop
 VOLUME ["/data"]
 
 # Start localshop
-CMD ["run/run-localhost.sh"]
+CMD ["/run-localhost.sh"]
